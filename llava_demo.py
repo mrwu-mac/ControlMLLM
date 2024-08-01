@@ -142,6 +142,7 @@ def method(mask_input, prompt_input, ori_img, choice, T, alpha, beta, max_new_to
 
         mean_att = torch.cat(attention_maps, 0).mean(0)
 
+        fig = None
         if show_att:
             fig = show_image_relevance( mean_att[:, img_token_idx+H*W:,img_token_idx:img_token_idx+H*W].mean(axis=0).mean(axis=0), image, orig_image=image, mask=mask, preprocess=preprocess, only_map=True, show_mask=True)
 
