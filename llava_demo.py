@@ -32,7 +32,7 @@ transform = transforms.Compose([
 ])
 
 
-image_path = "examples/GettyImages-1215928137.jpg"
+image_path = "assets/GettyImages-1215928137.jpg"
 
 image = Image.open(image_path)
 iw, ih = image.size
