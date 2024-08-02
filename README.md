@@ -61,6 +61,7 @@ class LLMGeneration():
 ```
 ## Support Models
  - [LLaVA v1.5](https://huggingface.co/llava-hf/llava-1.5-7b-hf)
+ - InstructBLIP
  - More
    
 ## Demo
