@@ -19,4 +19,4 @@ The repo is for the paper [ControlMLLM: Training-Free Visual Prompt Learning for
 We will upload the code in a few days once it's ready.
 
 ## Acknowledge
-[Laout-Guidance](https://github.com/silent-chen/layout-guidance), [Transformers](https://github.com/huggingface/transformers) and [Visualizer](https://github.com/luo3300612/Visualizer).
+[Layout-Guidance](https://github.com/silent-chen/layout-guidance), [Transformers](https://github.com/huggingface/transformers) and [Visualizer](https://github.com/luo3300612/Visualizer).
