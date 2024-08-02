@@ -55,6 +55,11 @@ class LLMGeneration():
 ```
 
 ## Demo
+```
+python llava_demo.py
+```
+
+## ROC and RTC task 
 We will upload the code in a few days once it's ready.
 
 ## Acknowledge
