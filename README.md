@@ -65,7 +65,7 @@ python llava_demo.py
 ```
 ![demo](assets/demo.png)
 
-Tips: Due to the image cropping during preprocessing in LLaVA1.5, referring to region at the edges of the image may become unreliable.
+Tips: Due to the image cropping during preprocessing in LLaVA1.5, referring to region at the edges of the image may become unreliable. If your referring does not work, you can also try slightly adjusting the visual prompt or text prompt, which might produce surprising results.
 
 
 ## ROC and RTC task 
