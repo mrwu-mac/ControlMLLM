@@ -31,6 +31,28 @@ git clone https://github.com/mrwu-mac/transformers
 cd transformers
 pip install -e .
 ```
+Tips: Our key modification in the Transformers involves using the Visualizer toolkit to obtain gradient-based attention maps. If you need to modify your own model, you can easily do so by using the Visualizer to decorate the attention function in your LLM decoder,
+```
+from visualizer import get_local
+class LLMAttention():
+    @get_local('attn_weights')
+    def forward():
+         ...
+        attn_weights, value = scaled_dot_product_attention(
+            query,
+            key,
+            value
+        )
+        attn_output = attn_weights @ value
+         ...
+        return attn_output
+```
+And obtain gradients by removing the @torch.no_grad() decorator during generation,
+```
+class LLMGeneration():
+    # @torch.no_grad()
+    def generate():
+```
 
 ## Demo
 We will upload the code in a few days once it's ready.
