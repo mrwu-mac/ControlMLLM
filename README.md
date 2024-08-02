@@ -1,5 +1,4 @@
 # ControlMLLM
-![teaser](assets/demo.png)
 
 The repo is for the paper [ControlMLLM: Training-Free Visual Prompt Learning for Multimodal Large Language Models](https://arxiv.org/abs/2407.21534).
 
@@ -64,7 +63,10 @@ class LLMGeneration():
 ```
 python llava_demo.py
 ```
+![demo](assets/demo.png)
+
 Tips: Due to the image cropping during preprocessing in LLaVA1.5, referring to region at the edges of the image may become unreliable.
+
 
 ## ROC and RTC task 
 We will upload the code in a few days once it's ready.
