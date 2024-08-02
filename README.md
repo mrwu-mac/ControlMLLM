@@ -15,7 +15,7 @@ The repo is for the paper [ControlMLLM: Training-Free Visual Prompt Learning for
 }
 ```
 ## News
- - ```2024/8/2:``` We release demo on LLaVA.
+ - ```2024/8/2:``` We release demo on LLaVA v1.5.
 
 ## Setup
 ```
