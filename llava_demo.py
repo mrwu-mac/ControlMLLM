@@ -32,7 +32,7 @@ transform = transforms.Compose([
 ])
 
 
-image_path = "assets/GettyImages-1215928137.jpg"
+image_path = "examples/GettyImages-1215928137.jpg"
 
 image = Image.open(image_path)
 iw, ih = image.size
@@ -126,7 +126,7 @@ def method(mask_input, prompt_input, ori_img, choice, T, alpha, beta, max_new_to
         new_inputs_embeds = inputs_embeds
         vprompt_cur = beta * visual_prompt + (1-beta) * vprompt_history  # EMA
         new_inputs_embeds[:,img_token_idx:img_token_idx+H*W,:] += vprompt_cur
-        outputs = model.generate(inputs_embeds=new_inputs_embeds, attention_mask=attention_mask, max_new_tokens=30, return_dict_in_generate=True, output_scores=True)
+        outputs = model.generate(inputs_embeds=new_inputs_embeds, attention_mask=attention_mask, max_new_tokens=1, return_dict_in_generate=True, output_scores=True)
         cache = get_local.cache
 
         generate_ids = outputs.sequences
@@ -135,14 +135,13 @@ def method(mask_input, prompt_input, ori_img, choice, T, alpha, beta, max_new_to
         result_ids = generate_ids
 
         output = processor.batch_decode(generate_ids, skip_special_tokens=True, clean_up_tokenization_spaces=False)[0]
-        print(output)
+        # print(output)
 
         ori_attention_maps = cache['LlamaSdpaAttention.forward']
         attention_maps = [att.to(device) for i,att in enumerate(ori_attention_maps) if att.shape[-2] > 1]
 
         mean_att = torch.cat(attention_maps, 0).mean(0)
 
-        fig = None
         if show_att:
             fig = show_image_relevance( mean_att[:, img_token_idx+H*W:,img_token_idx:img_token_idx+H*W].mean(axis=0).mean(axis=0), image, orig_image=image, mask=mask, preprocess=preprocess, only_map=True, show_mask=True)
 
@@ -152,7 +151,7 @@ def method(mask_input, prompt_input, ori_img, choice, T, alpha, beta, max_new_to
         target2img_rel = mean_att[:, img_token_idx+H*W:,img_token_idx:img_token_idx+H*W].mean(axis=0).mean(axis=0).unsqueeze(0)
        
         loss = alpha * compute_ca_loss(target2img_rel.to(mask.device), masks=[mask], choice=choice, object_positions=None)
-        print(loss)
+        # print(loss)
         loss_history.append(loss.item())
 
         if early_stop:
