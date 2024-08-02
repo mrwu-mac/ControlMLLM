@@ -14,6 +14,9 @@ The repo is for the paper [ControlMLLM: Training-Free Visual Prompt Learning for
       url={https://arxiv.org/abs/2407.21534}, 
 }
 ```
+## News
+ - ```2024/8/2:``` We release demo on LLaVA.
+
 ## Setup
 ```
 pip install -r requirements.txt
