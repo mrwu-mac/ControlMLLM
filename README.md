@@ -13,7 +13,7 @@ The repo is for the paper [ControlMLLM: Training-Free Visual Prompt Learning for
       url={https://arxiv.org/abs/2407.21534}, 
 }
 ```
-## Project Features
+## Features
  - Training-free method, supports running on a single RTX 3090 24GB GPU.
  - Provides visualization tools in ```utils.py``` for interpretability.
 
