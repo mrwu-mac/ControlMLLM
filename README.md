@@ -64,9 +64,13 @@ class LLMGeneration():
 ```
 python llava_demo.py
 ```
+Tips: Due to the image cropping during preprocessing in LLaVA1.5, referring to region at the edges of the image may become unreliable.
 
 ## ROC and RTC task 
 We will upload the code in a few days once it's ready.
+
+## Results
+![vis1](assets/vis.png)
 
 ## Acknowledge
 [Layout-Guidance](https://github.com/silent-chen/layout-guidance), [Transformers](https://github.com/huggingface/transformers) and [Visualizer](https://github.com/luo3300612/Visualizer).
