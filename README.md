@@ -15,7 +15,7 @@ The repo is for the paper [ControlMLLM: Training-Free Visual Prompt Learning for
 ```
 ## Project Features
  - Training-free method, supports running on a single RTX 3090 24GB GPU.
- - Provides visualization tools for interpretability.
+ - Provides visualization tools in ```utils.py``` for interpretability.
 
 ## News
  - ```2024/8/2:``` We release demo on LLaVA v1.5.
