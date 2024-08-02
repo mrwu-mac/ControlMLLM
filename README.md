@@ -15,6 +15,22 @@ The repo is for the paper [ControlMLLM: Training-Free Visual Prompt Learning for
 }
 ```
 ## Setup
+```
+pip install -r requirements.txt
+```
+
+Install the Visulizer,
+```
+git clone https://github.com/luo3300612/Visualizer
+cd Visualizer
+pip install -e .
+```
+Install the Transformers we preprocessed,
+```
+git clone https://github.com/mrwu-mac/transformers
+cd transformers
+pip install -e .
+```
 
 We will upload the code in a few days once it's ready.
 
