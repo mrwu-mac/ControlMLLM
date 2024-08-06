@@ -22,6 +22,8 @@ The repo is for the paper [ControlMLLM: Training-Free Visual Prompt Learning for
 
 ## Setup
 ```
+conda create -n controlmllm python=3.9
+conda activate controlmllm
 pip install -r requirements.txt
 ```
 
@@ -62,6 +64,7 @@ class LLMGeneration():
 ## Support Models
  - [LLaVA v1.5](https://huggingface.co/llava-hf/llava-1.5-7b-hf)
  - InstructBLIP
+ - [LLaVA-HR](https://github.com/luogen1996/LLaVA-HR)
  - More
    
 ## Demo
