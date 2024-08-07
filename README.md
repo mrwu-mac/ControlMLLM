@@ -64,7 +64,6 @@ class LLMGeneration():
 ## Support Models
  - [LLaVA v1.5](https://huggingface.co/llava-hf/llava-1.5-7b-hf)
  - [InstructBLIP](https://huggingface.co/Salesforce/instructblip-vicuna-7b)
- - [LLaVA-HR](https://github.com/luogen1996/LLaVA-HR)
  - More
    
 ## Demo
