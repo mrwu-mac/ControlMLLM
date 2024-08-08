@@ -91,6 +91,15 @@ Download [data](https://drive.google.com/drive/folders/1k45OVgWmt3Y04hPJe7rSWXGV
                - image
                - mask
 ```
+And run the code to get the results.
+```
+sh task/ROC/llava_roc.sh
+```
+you should specify the ```visual_prompt``` in ```llava_roc.sh``` to get the results of different visual prompts.
+```
+sh task/RTC/llava_rtc.sh
+```
+you should specify the ```visual_prompt``` in ```llava_rtc.sh``` to get the results of different visual prompts.
 
 We will upload the code in a few days once it's ready.
 
