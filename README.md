@@ -77,7 +77,7 @@ Tips: Due to the image cropping during preprocessing in LLaVA1.5, referring to r
 
 
 ## ROC and RTC task 
-Download [data](https://drive.google.com/drive/folders/1k45OVgWmt3Y04hPJe7rSWXGVZq98YLS4?usp=sharing) and format the data as,
+Step 1: Download [data](https://drive.google.com/drive/folders/1k45OVgWmt3Y04hPJe7rSWXGVZq98YLS4?usp=sharing) and format the data as,
 ```
 - data
       - ROC
@@ -91,7 +91,8 @@ Download [data](https://drive.google.com/drive/folders/1k45OVgWmt3Y04hPJe7rSWXGV
                - image
                - mask
 ```
-And run the code to get the results.
+
+Step 2: run the code to get the results.
 ```
 sh task/ROC/llava_roc.sh
 ```
@@ -101,6 +102,7 @@ sh task/RTC/llava_rtc.sh
 ```
 you should specify the ```visual_prompt``` in ```llava_rtc.sh``` to get the results of different visual prompts.
 
+Step 3: Eval with generated results.
 We will upload the code in a few days once it's ready.
 
 ## Results
