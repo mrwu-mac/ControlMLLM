@@ -101,7 +101,7 @@ For RTC task,
 ```
 sh task/RTC/llava_rtc.sh
 ```
-you should specify the ```visual_prompt``` in ```llava_roc/rtc.sh``` to get the results of different visual prompts.
+you should specify the ```visual_prompt``` in ```llava_roc.sh``` or ```llava_rtc.sh``` to get the results of different visual prompts.
 And here are several optional parameters you can use, if you do not want to place your data or model in the default directories:
 - ```--model_path:``` Path to the model (default: pretrained_models/llava-1.5-7b-hf)
 - ```--data_path:``` Path to the dataset (default: data/ROC/LVIS or data/RTC/COCO-Text)
