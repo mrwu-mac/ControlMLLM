@@ -107,7 +107,6 @@ And here are several optional parameters you can use, if you do not want to plac
 - ```--data_path:``` Path to the dataset (default: data/ROC/LVIS or data/RTC/COCO-Text)
 - ```--question_file:``` Path to the question file (default: data/ROC/question_roc.json or data/RTC/question_rtc.json)
 - ```--answers_file:``` Path to the answers file (default: outputs/llava_roc.json or outputs/llava_rtc.json)
-```
 
 Step 3: Eval with generated results.
 We will upload the code in a few days once it's ready.
