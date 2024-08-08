@@ -77,7 +77,7 @@ Tips: Due to the image cropping during preprocessing in LLaVA1.5, referring to r
 
 
 ## ROC and RTC task 
-Step 1: Download [data](https://drive.google.com/drive/folders/1k45OVgWmt3Y04hPJe7rSWXGVZq98YLS4?usp=sharing) and format the data as,
+**Step 1:** Download [data](https://drive.google.com/drive/folders/1k45OVgWmt3Y04hPJe7rSWXGVZq98YLS4?usp=sharing) and format the data as,
 ```
 - data
       - ROC
@@ -92,7 +92,8 @@ Step 1: Download [data](https://drive.google.com/drive/folders/1k45OVgWmt3Y04hPJ
                - mask
 ```
 
-Step 2: run the code to get the results.
+**Step 2:** run the code to get the results.
+
 For ROC task,
 ```
 sh task/ROC/llava_roc.sh
@@ -108,7 +109,7 @@ And here are several optional parameters you can use, if you do not want to plac
 - ```--question_file:``` Path to the question file (default: data/ROC/question_roc.json or data/RTC/question_rtc.json)
 - ```--answers_file:``` Path to the answers file (default: outputs/llava_roc.json or outputs/llava_rtc.json)
 
-Step 3: Eval with generated results.
+**Step 3:** Eval with generated results.
 We will upload the code in a few days once it's ready.
 
 ## Results
