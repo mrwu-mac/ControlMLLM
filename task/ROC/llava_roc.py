@@ -41,7 +41,7 @@ def parse_args():
 
     # Optimization parameters
     parser.add_argument('--alpha', type=float, default=400, help='Alpha parameter')
-    parser.add_argument('--T', type=int, default=5, help='T parameter')
+    parser.add_argument('--T', type=int, default=4, help='T parameter')
 
     # Flags
     parser.add_argument('--show_att', action='store_true', help='Flag to show attention maps')
