@@ -35,7 +35,7 @@ def parse_args():
     parser.add_argument('--answers_file', type=str, default='outputs/llava_roc.json', help='Path to the answers file')
 
     # Attention dimensions and input size of image
-    parser.add_argument('--H', type=int, default=24, help='Height of the attention amp')
+    parser.add_argument('--H', type=int, default=24, help='Height of the attention map')
     parser.add_argument('--W', type=int, default=24, help='Width of the attention map')
     parser.add_argument('--n_px', type=int, default=224, help='Input size of image')
 
