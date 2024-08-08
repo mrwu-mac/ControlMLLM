@@ -93,14 +93,21 @@ Step 1: Download [data](https://drive.google.com/drive/folders/1k45OVgWmt3Y04hPJ
 ```
 
 Step 2: run the code to get the results.
+For ROC task,
 ```
 sh task/ROC/llava_roc.sh
 ```
-you should specify the ```visual_prompt``` in ```llava_roc.sh``` to get the results of different visual prompts.
+For RTC task,
 ```
 sh task/RTC/llava_rtc.sh
 ```
-you should specify the ```visual_prompt``` in ```llava_rtc.sh``` to get the results of different visual prompts.
+you should specify the ```visual_prompt``` in ```llava_roc/rtc.sh``` to get the results of different visual prompts.
+And here are several optional parameters you can use, if you do not want to place your data or model in the default directories:
+- ```--model_path:``` Path to the model (default: pretrained_models/llava-1.5-7b-hf)
+- ```--data_path:``` Path to the dataset (default: data/ROC/LVIS or data/RTC/COCO-Text)
+- ```--question_file:``` Path to the question file (default: data/ROC/question_roc.json or data/RTC/question_rtc.json)
+- ```--answers_file:``` Path to the answers file (default: outputs/llava_roc.json or outputs/llava_rtc.json)
+```
 
 Step 3: Eval with generated results.
 We will upload the code in a few days once it's ready.
