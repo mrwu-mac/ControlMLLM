@@ -77,18 +77,19 @@ Tips: Due to the image cropping during preprocessing in LLaVA1.5, referring to r
 
 
 ## ROC and RTC task 
-Download [data](https://drive.google.com/drive/folders/1k45OVgWmt3Y04hPJe7rSWXGVZq98YLS4?usp=sharing).
+Download [data](https://drive.google.com/drive/folders/1k45OVgWmt3Y04hPJe7rSWXGVZq98YLS4?usp=sharing) and format the data structure as,
 ```
- - ROC task
-     - question_roc.json
-     - LVIS
-         - image
-         - mask
-- RTC task
-     - question_rtc.json
-     - COCO-Text
-         - image
-         - mask
+- data
+      - ROC
+           - question_roc.json
+           - LVIS
+               - image
+               - mask
+      - RTC
+           - question_rtc.json
+           - COCO-Text
+               - image
+               - mask
 ```
 
 We will upload the code in a few days once it's ready.
