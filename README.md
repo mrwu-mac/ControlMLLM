@@ -77,7 +77,7 @@ Tips: Due to the image cropping during preprocessing in LLaVA1.5, referring to r
 
 
 ## ROC and RTC task 
-Download [data](https://drive.google.com/drive/folders/1k45OVgWmt3Y04hPJe7rSWXGVZq98YLS4?usp=sharing) and format the data structure as,
+Download [data](https://drive.google.com/drive/folders/1k45OVgWmt3Y04hPJe7rSWXGVZq98YLS4?usp=sharing) and format the data as,
 ```
 - data
       - ROC
