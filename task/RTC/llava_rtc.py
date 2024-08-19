@@ -41,7 +41,7 @@ def parse_args():
 
     # Optimization parameters
     parser.add_argument('--alpha', type=float, default=400, help='Alpha parameter')
-    parser.add_argument('--T', type=int, default=4, help='T parameter')
+    parser.add_argument('--T', type=int, default=5, help='T parameter')
 
     # Flags
     parser.add_argument('--show_att', action='store_true', help='Flag to show attention maps')
@@ -181,7 +181,8 @@ def main():
 
             output = processor.batch_decode(generate_ids, skip_special_tokens=True, clean_up_tokenization_spaces=False)[0]
             # print(output)
-            output_T.append(output)
+            if _ == 0:
+                output_T.append(output)
 
             ori_attention_maps = get_local.cache['LlamaSdpaAttention.forward']
             attention_maps = [att for i, att in enumerate(ori_attention_maps) if att.shape[-2] > 1]
