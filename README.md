@@ -18,6 +18,7 @@ The repo is for the paper [ControlMLLM: Training-Free Visual Prompt Learning for
  - Provides visualization tools in ```utils.py``` for interpretability.
 
 ## News
+ - ```2024/8/21:``` We release eval pipeline on ROC and RTC task. 
  - ```2024/8/8:``` We release demo on InstructBLIP.
  - ```2024/8/2:``` We release demo on LLaVA v1.5.
 
