@@ -30,7 +30,7 @@ pip install -r requirements.txt
 
 Install the Visulizer,
 ```
-git clone https://github.com/luo3300612/Visualizer
+git clone https://github.com/mrwu-mac/Visualizer
 cd Visualizer
 pip install -e .
 ```
