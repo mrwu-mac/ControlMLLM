@@ -111,7 +111,15 @@ And here are several optional parameters you can use, if you do not want to plac
 - ```--answers_file:``` Path to the answers file (default: outputs/llava_roc.json or outputs/llava_rtc.json)
 
 **Step 3:** Eval with generated results.
-We will upload the code in a few days once it's ready.
+
+For ROC task, specify the ```--set``` to eval the ```test``` split or ```val``` split.
+```
+python task/ROC/eval.py --pred_file='outputs/llava_7b_roc_box.json' --set='test'
+```
+For RTC task,
+```
+python task/RTC/eval.py --pred_file='outputs/llava_7b_rtc_box.json'
+```
 
 ## Results
 ![vis1](assets/vis.png)
