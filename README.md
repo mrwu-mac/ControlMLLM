@@ -125,5 +125,5 @@ python task/RTC/eval.py --pred_file='outputs/llava_7b_rtc_box.json'
 ## Results
 ![vis1](assets/vis.png)
 
-## Acknowledge
-[Layout-Guidance](https://github.com/silent-chen/layout-guidance), [Transformers](https://github.com/huggingface/transformers) and [Visualizer](https://github.com/luo3300612/Visualizer).
+## Acknowledgement
+[Layout-Guidance](https://github.com/silent-chen/layout-guidance), [ml-ferret](https://github.com/apple/ml-ferret), [Transformers](https://github.com/huggingface/transformers) and [Visualizer](https://github.com/luo3300612/Visualizer).
