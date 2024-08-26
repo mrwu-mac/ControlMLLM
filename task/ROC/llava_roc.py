@@ -141,19 +141,19 @@ def main():
         elif args.visual_prompt == 'scribble':
             for scri in scribble:
                 mask[int(scri[1]), int(scri[0])] = 1
-            mask_input = ((1-mask_input) * 255).astype(np.uint8)
-            distance_transform = cv2.distanceTransform(mask_input, cv2.DIST_L2, 5)
+            mask = ((1-mask) * 255).astype(np.uint8)
+            distance_transform = cv2.distanceTransform(mask, cv2.DIST_L2, 5)
             distance_transform_normalized = cv2.normalize(distance_transform, None, 0, 255, cv2.NORM_MINMAX, dtype=cv2.CV_8U)
-            mask_input = distance_transform_normalized
-            mask = transform(np.array(mask_input))[0]
+            mask = distance_transform_normalized
+            mask = transform(np.array(mask))[0]
     
         elif args.visual_prompt == 'point':
             mask[int(point[1]), int(point[0])] = 1
-            mask_input = ((1-mask_input) * 255).astype(np.uint8)
-            distance_transform = cv2.distanceTransform(mask_input, cv2.DIST_L2, 5)
+            mask = ((1-mask) * 255).astype(np.uint8)
+            distance_transform = cv2.distanceTransform(mask, cv2.DIST_L2, 5)
             distance_transform_normalized = cv2.normalize(distance_transform, None, 0, 255, cv2.NORM_MINMAX, dtype=cv2.CV_8U)
-            mask_input = distance_transform_normalized
-            mask = transform(np.array(mask_input))[0]
+            mask = distance_transform_normalized
+            mask = transform(np.array(mask))[0]
         
 
         mask = mask.cuda() if torch.cuda.is_available() else mask
