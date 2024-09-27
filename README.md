@@ -1,6 +1,6 @@
 # ControlMLLM
 
-The repo is for the paper [ControlMLLM: Training-Free Visual Prompt Learning for Multimodal Large Language Models](https://arxiv.org/abs/2407.21534).
+The repo is for the paper [ControlMLLM: Training-Free Visual Prompt Learning for Multimodal Large Language Models (NeurIPS2024)](https://arxiv.org/abs/2407.21534).
 
 ```
 @misc{wu2024controlmllmtrainingfreevisualprompt,
@@ -18,6 +18,7 @@ The repo is for the paper [ControlMLLM: Training-Free Visual Prompt Learning for
  - Provides visualization tools in ```utils.py``` for interpretability.
 
 ## News
+ - ```2024/9/26:``` ControlMLLM is accepted by NeurIPS 2024.
  - ```2024/8/21:``` We release eval pipeline on ROC and RTC task. 
  - ```2024/8/8:``` We release demo on InstructBLIP.
  - ```2024/8/2:``` We release demo on LLaVA v1.5.
