@@ -1,7 +1,7 @@
 # ControlMLLM
 
 <div align="center">
-    <img src="assets/method.png" alt="method" width="600"/>
+    <img src="assets/method.png" alt="method" width="500"/>
 </div>
 
 The repo is for the paper [ControlMLLM: Training-Free Visual Prompt Learning for Multimodal Large Language Models (NeurIPS2024)](https://arxiv.org/abs/2407.21534).
