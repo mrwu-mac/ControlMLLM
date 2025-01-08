@@ -26,7 +26,7 @@ def parse_args():
     parser = argparse.ArgumentParser(description="Hyperparameters for the model")
 
     # Visual prompt options
-    parser.add_argument('--visual_prompt', type=str, choices=['box', 'mask', 'scribble', 'point'], default='box', help='Visual prompt method')
+    parser.add_argument('--visual_prompt', type=str, choices=['Box', 'Mask', 'Scribble', 'Point'], default='Box', help='Visual prompt method')
 
     # Model paths
     parser.add_argument('--model_path', type=str, default="pretrained_models/llava-1.5-7b-hf", help='Path to the pretrained model')
@@ -127,18 +127,18 @@ def main():
         inputs = processor(text=prompt, images=image, return_tensors="pt").to(device)
         img_token_idx = int(torch.where(inputs['input_ids'] == 32000)[1])
 
-        mask = torch.zeros(size=(ih, iw))
+        mask = np.zeros((ih, iw))
         
-        if args.visual_prompt == 'box':
+        if args.visual_prompt == 'Box':
             x_min, y_min, x_max, y_max = int(bbox[0]), int(bbox[1]), int(bbox[0] + bbox[2]), int(bbox[1] + bbox[3])
             mask[y_min: y_max, x_min: x_max] = 1
             mask = transform(mask.numpy())[0]
 
-        elif args.visual_prompt == 'mask':
+        elif args.visual_prompt == 'Mask':
             mask = Image.open(mask_path)
             mask = transform(np.array(mask))[0]
 
-        elif args.visual_prompt == 'scribble':
+        elif args.visual_prompt == 'Scribble':
             for scri in scribble:
                 mask[int(scri[1]), int(scri[0])] = 1
             mask = ((1-mask) * 255).astype(np.uint8)
@@ -147,7 +147,7 @@ def main():
             mask = distance_transform_normalized
             mask = transform(np.array(mask))[0]
     
-        elif args.visual_prompt == 'point':
+        elif args.visual_prompt == 'Point':
             mask[int(point[1]), int(point[0])] = 1
             mask = ((1-mask) * 255).astype(np.uint8)
             distance_transform = cv2.distanceTransform(mask, cv2.DIST_L2, 5)
@@ -223,7 +223,7 @@ def main():
                 fig.savefig('vis/img_tmp_{}.png'.format(_), dpi=300, bbox_inches='tight')
 
             target2img_rel = mean_att[:, img_token_idx + args.H * args.W:, img_token_idx:img_token_idx + args.H * args.W].mean(axis=0).mean(axis=0).unsqueeze(0)
-            loss = args.alpha * compute_ca_loss(target2img_rel.to(mask.device), masks=[mask], object_positions=None)
+            loss = args.alpha * compute_ca_loss(target2img_rel.to(mask.device), masks=[mask], choice=args.visual_prompt, object_positions=None)
 
             loss_history.append(loss.item())
             if args.early_stop:
