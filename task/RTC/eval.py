@@ -19,7 +19,7 @@ import numpy as np
 
 def get_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--ann_file', type=str, default='data/ROC/question_rtc.json')
+    parser.add_argument('--ann_file', type=str, default='data/RTC/question_rtc.json')
     parser.add_argument('--pred_file', type=str, default='outputs/llava_7b_rtc_box.json')
     return parser.parse_args()
 
