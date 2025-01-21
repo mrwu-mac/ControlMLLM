@@ -184,7 +184,7 @@ def method(mask_input, prompt_input, ori_img, choice, T, alpha, beta, max_new_to
         new_inputs_embeds = inputs_embeds
         vprompt_cur = beta * visual_prompt + (1-beta) * vprompt_history  # EMA
         new_inputs_embeds[:,img_token_idx:img_token_idx+H*W,:] += vprompt_cur
-        outputs = model.generate(inputs_embeds=inputs_embeds, attention_mask=attention_mask, max_new_tokens=max_new_token, return_dict_in_generate=True, output_scores=True)
+        outputs = model.generate(inputs_embeds=new_inputs_embeds, attention_mask=attention_mask, max_new_tokens=max_new_token, return_dict_in_generate=True, output_scores=True)
         
         generate_ids = outputs.sequences
         logits = outputs.scores
