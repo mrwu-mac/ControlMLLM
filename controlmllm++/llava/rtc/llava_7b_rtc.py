@@ -59,7 +59,7 @@ def parse_args():
 
     # ControlMLLM++ parameters
     parser.add_argument('--use_cd', action='store_true', help='Use Comparative Decoding')
-    parser.add_argument('--cd_alpha', type=float, default=0.1, help='Comparative Decoding alpha parameter')
+    parser.add_argument('--cd_alpha', type=float, default=0.7, help='Comparative Decoding alpha parameter')
     parser.add_argument('--cd_beta', type=float, default=0.1, help='Comparative Decoding beta parameter')
 
     # Flags for visualization
@@ -71,7 +71,6 @@ def parse_args():
 
 def main():
     args = parse_args()
-
     # Define transforms
     transform = transforms.Compose([
         transforms.ToPILImage(),
@@ -232,6 +231,8 @@ def main():
                 # len(attention_maps) = 32
                 att for i, att in enumerate(ori_attention_maps) if att.shape[-2] > 1
             ]
+            print(f"Number of attention maps: {len(attention_maps)}")
+            print(f"Shape of attention maps: {attention_maps[0].shape}")
 
             # mean_att.shape = torch.Size([32, 603, 603]) (example)
             mean_att = torch.cat([att.to(device) for att in attention_maps[ATT_LAYER_START:ATT_LAYER_END]], 0).mean(0)
@@ -273,12 +274,9 @@ def main():
             )[0]
             state['m'] = beta1 * state['m'] + (1 - beta1) * grad_cond
             state['s'] = beta2 * state['s'] + (1 - beta2) * grad_cond.pow(2)
-            # 偏差修正
             m_hat = state['m'] / (1 - beta1 ** hyperparams['t'])
             s_hat = state['s'] / (1 - beta2 ** hyperparams['t'])
-            # Adam 更新参数
             visual_prompt = visual_prompt - hyperparams['lr'] * m_hat / (torch.sqrt(s_hat) + epsilon)
-            # 更新时间步
             hyperparams['t'] += 1
             get_local.clear()
             torch.cuda.empty_cache()

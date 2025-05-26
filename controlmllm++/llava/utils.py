@@ -35,44 +35,10 @@ def compute_ca_loss(rel_map, masks, choice=None, mu=0.3, object_positions=None):
                 dim=-1) / attention_sum
         else:
             activation_value = (attention_map_reshaped * mask).reshape(b, -1).sum(dim=-1) / attention_sum
-        # print(f"activation_map_reshaped: {attention_map_reshaped}")
-        # print(f'mask: {mask} mask.shape: {mask.shape} mask.sum(): {mask.sum()}')
-        # print(f"attention_sum: {attention_sum}")
-        # print(f"activation_value: {activation_value}")
         obj_loss += torch.mean((1 - activation_value) ** 2)
         loss += obj_loss
 
     return loss
-
-
-def compute_loss_return_reward(rel_map, masks, choice=None, object_positions=None):
-    loss = 0
-    object_number = len(masks)  # Single Region = 1
-    if object_number == 0:
-        return torch.tensor(0).float().cuda() if torch.cuda.is_available() else torch.tensor(0).float()
-
-    attn_map = rel_map  # [1, 576]
-    b = attn_map.shape[0]
-    H, W = masks[0].shape  # H, W = 24, 24
-
-    attention_map_reshaped = attn_map.reshape(b, H, W)  # [1, 24, 24]
-    attention_sum = attention_map_reshaped.reshape(b, -1).sum(dim=-1, keepdim=True)
-
-    for obj_idx in range(object_number):
-        obj_loss = 0
-        mask = masks[obj_idx]
-
-        if choice and choice in ["Scribble", "Point"]:
-            activation_value = (attention_map_reshaped * gaussian(mask, 0, 0.1)).reshape(b, -1).sum(
-                dim=-1) / attention_sum
-        else:
-            activation_value = (attention_map_reshaped * mask).reshape(b, -1).sum(dim=-1) / attention_sum
-
-        obj_loss += torch.mean((1 - activation_value) ** 2)
-        loss += obj_loss
-
-    return loss, activation_value
-
 
 def show_image_relevance(image_relevance, image, orig_image, preprocess, mask=None, only_map=False, show_mask=False,
                          att_hw=(24, 24)):
