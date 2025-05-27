@@ -22,6 +22,7 @@ The repo is for the paper [ControlMLLM: Training-Free Visual Prompt Learning for
  - Provides visualization tools in ```utils.py``` for interpretability.
 
 ## News
+ - ```2025/5/26:``` We release the code of ControlMLLM++, an extension of ControlMLLM, which introduces a new optimization strategy for better test-time stability and convergence. The technical report is coming soon.
  - ```2024/9/26:``` ControlMLLM is accepted by NeurIPS 2024.
  - ```2024/8/21:``` We release eval pipeline on ROC and RTC task. 
  - ```2024/8/8:``` We release demo on InstructBLIP.
