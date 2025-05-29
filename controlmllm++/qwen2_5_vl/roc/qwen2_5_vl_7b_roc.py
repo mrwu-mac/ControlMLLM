@@ -9,11 +9,7 @@ from qwen_utils import (
     get_grid_shape, build_mask_from_bbox, compute_activation_loss_qwen
 )
 
-ATT_LAYER_START = 12
-ATT_LAYER_END = 28
-
 device = "cuda" if torch.cuda.is_available() else "cpu"
-
 
 # ---------- CLI ----------
 def parse_args():
@@ -35,12 +31,17 @@ def parse_args():
     p.add_argument('--cd_alpha', type=float, default=0.01)
     p.add_argument('--cd_beta', type=float, default=0.1)
 
+    parser.add_argument('--start_layer', type=int, default=12, help='Start layer for attention')
+    parser.add_argument('--end_layer', type=int, default=28, help='End layer for attention')
+
     # p.add_argument('--show_att', action='store_true')
     return p.parse_args()
 
 
 def main():
     args = parse_args()
+    ATT_LAYER_START = args.start_layer
+    ATT_LAYER_END = args.end_layer
 
     model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
         args.model_path,

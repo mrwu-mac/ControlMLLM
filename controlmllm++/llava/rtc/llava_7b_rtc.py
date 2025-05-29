@@ -62,6 +62,9 @@ def parse_args():
     parser.add_argument('--cd_alpha', type=float, default=0.7, help='Comparative Decoding alpha parameter')
     parser.add_argument('--cd_beta', type=float, default=0.1, help='Comparative Decoding beta parameter')
 
+    parser.add_argument('--start_layer', type=int, default=14, help='Start layer for attention')
+    parser.add_argument('--end_layer', type=int, default=26, help='End layer for attention')
+
     # Flags for visualization
     parser.add_argument('--show_att', action='store_true', help='Flag to show attention maps')
 
@@ -71,6 +74,9 @@ def parse_args():
 
 def main():
     args = parse_args()
+    ATT_LAYER_START = args.start_layer
+    ATT_LAYER_END = args.end_layer
+
     # Define transforms
     transform = transforms.Compose([
         transforms.ToPILImage(),
