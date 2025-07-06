@@ -15,12 +15,13 @@ device = "cuda" if torch.cuda.is_available() else "cpu"
 def parse_args():
     p = argparse.ArgumentParser()
     p.add_argument('--model_path', default="pretrained_models/Qwen2.5-VL-7B-Instruct")
-    p.add_argument('--data_path', default="data/ROC/LVIS")
-    p.add_argument('--question_file', default='data/ROC/question_roc.json')
-    p.add_argument('--answers_file', default='outputs/qwen2_5_7b_roc_ours_new.json')
+    p.add_argument('--data_path', default="dataset/LVIS")
+    p.add_argument('--question_file', default='dataset/LVIS/question_roc.json')
+    p.add_argument('--set', type=str, default='test', choices=['test', 'val'], help="Use test or validation split")
+    p.add_argument('--answers_file', default='outputs/qwen2_5_vl_7b_roc.json')
 
     p.add_argument('--visual_prompt', choices=['Box'], default='Box')
-    p.add_argument('--prompt_type', type=str, default='none', choices=['box', 'color', 'none'])
+    p.add_argument('--prompt_type', type=str, default='box', choices=['box', 'color', 'none'])
     p.add_argument('--max_new_tokens', type=int, default=30)
     p.add_argument('--lr', type=float, default=0.02)
     p.add_argument('--alpha', type=float, default=400)
@@ -31,8 +32,8 @@ def parse_args():
     p.add_argument('--cd_alpha', type=float, default=0.01)
     p.add_argument('--cd_beta', type=float, default=0.1)
 
-    parser.add_argument('--start_layer', type=int, default=12, help='Start layer for attention')
-    parser.add_argument('--end_layer', type=int, default=28, help='End layer for attention')
+    p.add_argument('--start_layer', type=int, default=12, help='Start layer for attention')
+    p.add_argument('--end_layer', type=int, default=28, help='End layer for attention')
 
     # p.add_argument('--show_att', action='store_true')
     return p.parse_args()
@@ -56,6 +57,10 @@ def main():
         p.requires_grad = False
 
     questions = [json.loads(l) for l in open(args.question_file)]
+    if args.set == 'test':
+        questions = questions[:1548]
+    else:
+        questions = questions[1548:]
     ans_file = open(os.path.expanduser(args.answers_file), "w")
 
     beta1, beta2, eps = 0.9, 0.999, 1e-3

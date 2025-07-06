@@ -17,9 +17,7 @@ import json
 import clip
 import cv2
 from tqdm import tqdm
-
-ATT_LAYER_START = 14
-ATT_LAYER_END = 26
+from pycocotools.coco import COCO
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 _, preprocess = clip.load("ViT-B/32", device='cpu', jit=False)
@@ -35,13 +33,13 @@ def parse_args():
     # Model paths
     parser.add_argument('--model_path', type=str, default="pretrained_models/llava-1.5-7b-hf",
                         help='Path to the pretrained model')
-    parser.add_argument('--data_path', type=str, default="dataset/COCO-Text", help='Path to the dataset')
-    parser.add_argument('--question_file', type=str, default='dataset/COCO-Text/question_rtc.json', help='Path to the question file')
-    parser.add_argument('--set', type=str, default='test', choices=['test', 'val'], help="Use test or validation split")
-    parser.add_argument('--answers_file', type=str, default='outputs/llava_7b_rtc.json', help='Path to the answers file')
+    parser.add_argument('--data_path', type=str, default="dataset/COCO2014/train2014", help='Path to the dataset')
+    parser.add_argument('--coco_annotation_path', type=str, default='dataset/COCO2014/annotations/instances_train2014.json', help='Path to COCO annotation file')
+    parser.add_argument('--question_file', type=str, default='dataset/COCO2014/refcocog.json', help='Path to the question file')
+    parser.add_argument('--answers_file', type=str, default='outputs/llava_7b_refcocog.json', help='Path to the answers file')
 
     # Generation parameters
-    parser.add_argument('--max_new_tokens', type=int, default=30, help='Maximum number of new tokens to generate')
+    parser.add_argument('--max_new_tokens', type=int, default=50, help='Maximum number of new tokens to generate')
 
     # Attention dimensions and input size of image
     parser.add_argument('--H', type=int, default=24, help='Height of the attention map')
@@ -52,14 +50,14 @@ def parse_args():
     parser.add_argument('--lr', type=float, default=0.03, help='Learning rate for ADAM')
     # parser.add_argument('--beta', type=float, default=0.5, help='Beta parameter')
     parser.add_argument('--alpha', type=float, default=400, help='Alpha parameter')
-    parser.add_argument('--T', type=int, default=2, help='T parameter')
+    parser.add_argument('--T', type=int, default=4, help='T parameter')
     parser.add_argument('--mu', type=float, default=0.4)
     # parser.add_argument('--early_stop', action='store_true', help='Enable early stopping')
     # parser.add_argument('--loss_change_percent_threshold', type=float, default=25, help='Loss change percentage threshold')
 
     # ControlMLLM++ parameters
     parser.add_argument('--use_cd', action='store_true', help='Use Comparative Decoding')
-    parser.add_argument('--cd_alpha', type=float, default=0.7, help='Comparative Decoding alpha parameter')
+    parser.add_argument('--cd_alpha', type=float, default=0.1, help='Comparative Decoding alpha parameter')
     parser.add_argument('--cd_beta', type=float, default=0.1, help='Comparative Decoding beta parameter')
 
     parser.add_argument('--start_layer', type=int, default=14, help='Start layer for attention')
@@ -104,22 +102,20 @@ def main():
         p.requires_grad = False
 
     # Load questions from question file
-    questions = [json.loads(q) for q in open(args.question_file, "r")]
-    if args.set == 'test':
-        questions = questions[:1172]
-    else:
-        questions = questions[1172:]
+    coco = COCO(args.coco_annotation_path)
+    questions = json.load(open(args.question_file, "r"))['test']
     # Open answers file
     answers_file = os.path.expanduser(args.answers_file)
     ans_file = open(answers_file, "w")
 
     for q in tqdm(questions, desc="Processing Questions"):
-        qid = q['question_id']
-        label = q['label']  # ground truth
-        question = q['text'].replace('<location> ', '')
+        qid = q['image_id']
+        label = q['expressions']  # ground truth
+        question = "Can you provide a description of the region in a sentence?"
         prompt = "USER: <image>\n{} ASSISTANT:".format(question)
 
-        image_path = os.path.join(args.data_path, 'image', q['image'])
+        image_info = coco.loadImgs(q['image_id'])[0]
+        image_path = args.data_path + image_info['file_name']
         image = Image.open(image_path)
         iw, ih = image.size
 
@@ -129,18 +125,11 @@ def main():
         # =========== for visual prompt ==============
         mask = np.zeros((ih, iw))
         # Box
-        bbox = q['box']
-        # Mask
-        mask_path = os.path.join(args.data_path, 'mask', q['mask'])
-
+        bbox = q['bbox']
         if args.visual_prompt == 'Box':
             x_min, y_min, x_max, y_max = int(bbox[0]), int(bbox[1]), int(bbox[0] + bbox[2]), int(bbox[1] + bbox[3])
             mask[y_min: y_max, x_min: x_max] = 1
             mask = transform(mask)[0]
-
-        elif args.visual_prompt == 'Mask':
-            mask = Image.open(mask_path)
-            mask = transform(np.array(mask))[0]
         # =========== for visual prompt ==============
 
         mask = mask.cuda() if torch.cuda.is_available() else mask
@@ -237,8 +226,6 @@ def main():
                 # len(attention_maps) = 32
                 att for i, att in enumerate(ori_attention_maps) if att.shape[-2] > 1
             ]
-            print(f"Number of attention maps: {len(attention_maps)}")
-            print(f"Shape of attention maps: {attention_maps[0].shape}")
 
             # mean_att.shape = torch.Size([32, 603, 603]) (example)
             mean_att = torch.cat([att.to(device) for att in attention_maps[ATT_LAYER_START:ATT_LAYER_END]], 0).mean(0)

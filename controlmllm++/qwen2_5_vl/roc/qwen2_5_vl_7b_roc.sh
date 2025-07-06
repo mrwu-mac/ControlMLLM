@@ -4,5 +4,4 @@ python qwen2_5_vl_7b_roc.py \
     --question_file='dataset/LVIS/question_roc.json' \
     --answers_file='outputs/qwen2_5_vl_7b_roc.json' \
     --visual_prompt='Box' \
-    --prompt_type='box' \
     --use_cd

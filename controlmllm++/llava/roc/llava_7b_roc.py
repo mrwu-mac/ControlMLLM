@@ -34,7 +34,8 @@ def parse_args():
                         help='Path to the pretrained model')
     parser.add_argument('--data_path', type=str, default="dataset/LVIS", help='Path to the dataset')
     parser.add_argument('--question_file', type=str, default='question_roc.json', help='Path to the question file')
-    parser.add_argument('--answers_file', type=str, default='outputs/answer_roc.json', help='Path to the answers file')
+    parser.add_argument('--set', type=str, default='test', choices=['test', 'val'], help="Use test or validation split")
+    parser.add_argument('--answers_file', type=str, default='outputs/llava_7b_roc.json', help='Path to the answers file')
 
     # Generation parameters
     parser.add_argument('--max_new_tokens', type=int, default=30, help='Maximum number of new tokens to generate')
@@ -101,6 +102,10 @@ def main():
 
     # Load questions from question file
     questions = [json.loads(q) for q in open(args.question_file, "r")]
+    if args.set == 'test':
+        questions = questions[:1548]
+    else:
+        questions = questions[1548:]
     # Open answers file
     answers_file = os.path.expanduser(args.answers_file)
     ans_file = open(answers_file, "w")
