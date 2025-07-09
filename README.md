@@ -22,6 +22,7 @@ The repo is for the paper [ControlMLLM: Training-Free Visual Prompt Learning for
  - Provides visualization tools in ```utils.py``` for interpretability.
 
 ## News
+ - `2025/7/9:` Released **ControlMLLM++**, with RD task support (RefCOCOg, ScreenSpot) and new models (Qwen2.5-VL, LLaVA v1.5).
  - ```2024/9/26:``` ControlMLLM is accepted by NeurIPS 2024.
  - ```2024/8/21:``` We release eval pipeline on ROC and RTC task. 
  - ```2024/8/8:``` We release demo on InstructBLIP.
@@ -68,7 +69,17 @@ class LLMGeneration():
     # @torch.no_grad()
     def generate():
 ```
+## Setup for ControlMLLM++
+
+To run **ControlMLLM++** on specific tasks (ROC, RTC, RD) and models, refer to the individual model directories for detailed configurations:
+
+- `controlmllm++/qwen2_5_vl/README.md`
+- `controlmllm++/llava/README.md`
+- ...
+
 ## Support Models
+
+ - [Qwen2.5-VL](https://huggingface.co/Qwen/Qwen2.5-VL-7B-Instruct)
  - [LLaVA v1.5](https://huggingface.co/llava-hf/llava-1.5-7b-hf)(version<='05ae243')
  - [InstructBLIP](https://huggingface.co/Salesforce/instructblip-vicuna-7b)
  - [LLaVA-HR](https://github.com/luogen1996/LLaVA-HR)
@@ -127,8 +138,34 @@ For RTC task,
 python task/RTC/eval.py --pred_file='outputs/llava_7b_rtc_box.json'
 ```
 
+## Reference Description (RD) Task
+We introduce the **Reference Description (RD)** task as part of **ControlMLLM++**, focusing on region-level description generation. This task requires models to generate natural language descriptions for specific regions in images, extending evaluation beyond classification or selection.
+
+### 📂 Supported Datasets
+
+- **ScreenSpot**
+  ScreenSpot is an evaluation benchmark for GUI grounding, comprising over 1,200 instructions from diverse environments including iOS, Android, macOS, Windows, and Web. Each data point is annotated with element type (`Text` or `Icon`).
+  - For `Icon` elements, we formulate the query as:
+     **"What is this icon used for?"**
+  - For `Text` elements, we use:
+     **"What does this text say?"**
+- **RefCOCOg**
+  The RefCOCOg dataset is a referring expression generation (REG) benchmark used to evaluate understanding of language that refers to specific objects in natural images.
+  - For each region, we formulate the query as:
+     **"Can you provide a description of the region in a sentence?"**
+
+In all tasks, we only consider **single-region prompts**, focusing on concise grounding and description. The prompt formulation varies based on model architecture:
+
+- For **models without localization training**, such as LLaVA, we only use natural language questions (see above).
+- For **models with pretrained localization ability**, such as Qwen2.5-VL, we provide **explicit box coordinates** in the prompt to enhance grounding. For example:
+   `"Can you provide me with a detailed description of the region in the picture marked by box @ [x1, y1, x2, y2]."`
+
+> 👉 Download ScreenSpot json: [ScreenSpot](https://drive.google.com/file/d/11T_ONq05C77GNdFYo2XAt6gSwaam9ux3/view?usp=sharing)
+
 ## Results
+
 ![vis1](assets/vis.png)
 
 ## Acknowledgement
-[Layout-Guidance](https://github.com/silent-chen/layout-guidance), [ml-ferret](https://github.com/apple/ml-ferret), [Transformers](https://github.com/huggingface/transformers) and [Visualizer](https://github.com/luo3300612/Visualizer).
+
+[Layout-Guidance](https://github.com/silent-chen/layout-guidance), [ml-ferret](https://github.com/apple/ml-ferret), [Transformers](https://github.com/huggingface/transformers), [SeeClick](https://github.com/njucckevin/SeeClick) and [Visualizer](https://github.com/luo3300612/Visualizer).
