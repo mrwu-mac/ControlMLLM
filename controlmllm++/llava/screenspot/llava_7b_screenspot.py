@@ -18,9 +18,6 @@ import clip
 import cv2
 from tqdm import tqdm
 
-ATT_LAYER_START = 14
-ATT_LAYER_END = 26
-
 device = "cuda" if torch.cuda.is_available() else "cpu"
 _, preprocess = clip.load("ViT-B/32", device='cpu', jit=False)
 
@@ -35,10 +32,9 @@ def parse_args():
     # Model paths
     parser.add_argument('--model_path', type=str, default="pretrained_models/llava-1.5-7b-hf",
                         help='Path to the pretrained model')
-    parser.add_argument('--data_path', type=str, default="dataset/COCO-Text", help='Path to the dataset')
-    parser.add_argument('--question_file', type=str, default='dataset/COCO-Text/question_rtc.json', help='Path to the question file')
-    parser.add_argument('--set', type=str, default='test', choices=['test', 'val'], help="Use test or validation split")
-    parser.add_argument('--answers_file', type=str, default='outputs/llava_7b_rtc.json', help='Path to the answers file')
+    parser.add_argument('--data_path', type=str, default="dataset/ScreenSpot", help='Path to the dataset')
+    parser.add_argument('--question_file', type=str, default='dataset/ScreenSpot/question_screenspot.json', help='Path to the question file')
+    parser.add_argument('--answers_file', type=str, default='outputs/llava_7b_screenspot.json', help='Path to the answers file')
 
     # Generation parameters
     parser.add_argument('--max_new_tokens', type=int, default=30, help='Maximum number of new tokens to generate')
@@ -52,14 +48,14 @@ def parse_args():
     parser.add_argument('--lr', type=float, default=0.03, help='Learning rate for ADAM')
     # parser.add_argument('--beta', type=float, default=0.5, help='Beta parameter')
     parser.add_argument('--alpha', type=float, default=400, help='Alpha parameter')
-    parser.add_argument('--T', type=int, default=2, help='T parameter')
+    parser.add_argument('--T', type=int, default=3, help='T parameter')
     parser.add_argument('--mu', type=float, default=0.4)
     # parser.add_argument('--early_stop', action='store_true', help='Enable early stopping')
     # parser.add_argument('--loss_change_percent_threshold', type=float, default=25, help='Loss change percentage threshold')
 
     # ControlMLLM++ parameters
     parser.add_argument('--use_cd', action='store_true', help='Use Comparative Decoding')
-    parser.add_argument('--cd_alpha', type=float, default=0.7, help='Comparative Decoding alpha parameter')
+    parser.add_argument('--cd_alpha', type=float, default=0.1, help='Comparative Decoding alpha parameter')
     parser.add_argument('--cd_beta', type=float, default=0.1, help='Comparative Decoding beta parameter')
 
     parser.add_argument('--start_layer', type=int, default=14, help='Start layer for attention')
@@ -105,21 +101,17 @@ def main():
 
     # Load questions from question file
     questions = [json.loads(q) for q in open(args.question_file, "r")]
-    if args.set == 'test':
-        questions = questions[:1172]
-    else:
-        questions = questions[1172:]
     # Open answers file
     answers_file = os.path.expanduser(args.answers_file)
     ans_file = open(answers_file, "w")
 
     for q in tqdm(questions, desc="Processing Questions"):
-        qid = q['question_id']
-        label = q['label']  # ground truth
+        qid = q['id']
+        label = q['name']  # ground truth
         question = q['text'].replace('<location> ', '')
         prompt = "USER: <image>\n{} ASSISTANT:".format(question)
 
-        image_path = os.path.join(args.data_path, 'image', q['image'])
+        image_path = os.path.join(args.data_path, q['image_path'])
         image = Image.open(image_path)
         iw, ih = image.size
 
@@ -129,10 +121,13 @@ def main():
         # =========== for visual prompt ==============
         mask = np.zeros((ih, iw))
         # Box
-        bbox = q['box']
+        bbox = q['bbox']
         # Mask
-        mask_path = os.path.join(args.data_path, 'mask', q['mask'])
-
+        mask_path = os.path.join(args.data_path, 'mask', q['seg_mask'])
+        # Point
+        point = q['center_point']
+        # Scribble
+        scribble = q['scribble']
         if args.visual_prompt == 'Box':
             x_min, y_min, x_max, y_max = int(bbox[0]), int(bbox[1]), int(bbox[0] + bbox[2]), int(bbox[1] + bbox[3])
             mask[y_min: y_max, x_min: x_max] = 1
@@ -140,6 +135,25 @@ def main():
 
         elif args.visual_prompt == 'Mask':
             mask = Image.open(mask_path)
+            mask = transform(np.array(mask))[0]
+
+        elif args.visual_prompt == 'Scribble':
+            for scri in scribble:
+                mask[int(scri[1]), int(scri[0])] = 1
+            mask = ((1 - mask) * 255).astype(np.uint8)
+            distance_transform = cv2.distanceTransform(mask, cv2.DIST_L2, 5)
+            distance_transform_normalized = cv2.normalize(distance_transform, None, 0, 255, cv2.NORM_MINMAX,
+                                                          dtype=cv2.CV_8U)
+            mask = distance_transform_normalized
+            mask = transform(np.array(mask))[0]
+
+        elif args.visual_prompt == 'Point':
+            mask[int(point[1]), int(point[0])] = 1
+            mask = ((1 - mask) * 255).astype(np.uint8)
+            distance_transform = cv2.distanceTransform(mask, cv2.DIST_L2, 5)
+            distance_transform_normalized = cv2.normalize(distance_transform, None, 0, 255, cv2.NORM_MINMAX,
+                                                          dtype=cv2.CV_8U)
+            mask = distance_transform_normalized
             mask = transform(np.array(mask))[0]
         # =========== for visual prompt ==============
 
@@ -237,8 +251,6 @@ def main():
                 # len(attention_maps) = 32
                 att for i, att in enumerate(ori_attention_maps) if att.shape[-2] > 1
             ]
-            print(f"Number of attention maps: {len(attention_maps)}")
-            print(f"Shape of attention maps: {attention_maps[0].shape}")
 
             # mean_att.shape = torch.Size([32, 603, 603]) (example)
             mean_att = torch.cat([att.to(device) for att in attention_maps[ATT_LAYER_START:ATT_LAYER_END]], 0).mean(0)

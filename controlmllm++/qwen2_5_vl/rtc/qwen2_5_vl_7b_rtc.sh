@@ -4,5 +4,4 @@ python qwen2_5_vl_7b_rtc.py \
     --question_file='dataset/COCO-Text/question_rtc.json' \
     --answers_file='outputs/qwen2_5_vl_7b_rtc.json' \
     --visual_prompt='Box' \
-    --prompt_type='box' \
     --use_cd
