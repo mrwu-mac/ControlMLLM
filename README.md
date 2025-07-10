@@ -7,14 +7,16 @@
 The repo is for the paper [ControlMLLM: Training-Free Visual Prompt Learning for Multimodal Large Language Models (NeurIPS2024)](https://arxiv.org/abs/2407.21534).
 
 ```
-@misc{wu2024controlmllmtrainingfreevisualprompt,
-      title={ControlMLLM: Training-Free Visual Prompt Learning for Multimodal Large Language Models}, 
-      author={Mingrui Wu and Xinyue Cai and Jiayi Ji and Jiale Li and Oucheng Huang and Gen Luo and Hao Fei and Xiaoshuai Sun and Rongrong Ji},
-      year={2024},
-      eprint={2407.21534},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV},
-      url={https://arxiv.org/abs/2407.21534}, 
+@inproceedings{NEURIPS2024_4fd96b99,
+ author = {Wu, Mingrui and Cai, Xinyue and Ji, Jiayi and Li, Jiale and Huang, Oucheng and Gen Luo and Fei, Hao and Jiang, Guannan and Sun, Xiaoshuai and Ji, Rongrong},
+ booktitle = {Advances in Neural Information Processing Systems},
+ editor = {A. Globerson and L. Mackey and D. Belgrave and A. Fan and U. Paquet and J. Tomczak and C. Zhang},
+ pages = {45206--45234},
+ publisher = {Curran Associates, Inc.},
+ title = {ControlMLLM: Training-Free Visual Prompt Learning for Multimodal Large Language Models},
+ url = {https://proceedings.neurips.cc/paper_files/paper/2024/file/4fd96b997454b5b02698595df70fccaf-Paper-Conference.pdf},
+ volume = {37},
+ year = {2024}
 }
 ```
 ## Features
@@ -57,7 +59,7 @@ Please follow the instructions at [DATASETS.md](DATASETS.md) to prepare all data
    
 ## Demo
 ```
-python llava_demo.py
+python controlmllm/llava/llava_demo.py
 ```
 ![demo](assets/demo.png)
 

@@ -63,13 +63,13 @@ Please make sure datasets are prepared as described in [datasets.md](../datasets
 For ROC task:
 
 ```bash
-sh task/ROC/llava_roc.sh
+sh llava/roc/llava_roc.sh
 ```
 
 For RTC task:
 
 ```bash
-sh task/RTC/llava_rtc.sh
+sh llava/rtc/llava_rtc.sh
 ```
 
 Each script supports optional arguments:
@@ -85,14 +85,14 @@ Each script supports optional arguments:
 ROC:
 
 ```bash
-python task/ROC/eval.py --pred_file=outputs/llava_7b_roc_box.json --set=test
+python llava/roc/eval.py --pred_file=outputs/llava_7b_roc_box.json --set=test
 ```
 
 RTC:
 
 ```bash
-python task/RTC/eval.py --pred_file=outputs/llava_7b_rtc_box.json
+python llava/rtc/eval.py --pred_file=outputs/llava_7b_rtc_box.json
 ```
 
 
-For enhanced visual grounding and generation, refer to the upgraded version in [`controlmllm++`](../controlmllm++/README.md).
+For enhanced visual grounding and generation, refer to the upgraded version in [`controlmllm++`](../controlmllm++/llava/RUN.md).
