@@ -7,16 +7,13 @@
 The repo is for the paper [ControlMLLM: Training-Free Visual Prompt Learning for Multimodal Large Language Models (NeurIPS2024)](https://arxiv.org/abs/2407.21534).
 
 ```
-@inproceedings{NEURIPS2024_4fd96b99,
- author = {Wu, Mingrui and Cai, Xinyue and Ji, Jiayi and Li, Jiale and Huang, Oucheng and Gen Luo and Fei, Hao and Jiang, Guannan and Sun, Xiaoshuai and Ji, Rongrong},
- booktitle = {Advances in Neural Information Processing Systems},
- editor = {A. Globerson and L. Mackey and D. Belgrave and A. Fan and U. Paquet and J. Tomczak and C. Zhang},
- pages = {45206--45234},
- publisher = {Curran Associates, Inc.},
- title = {ControlMLLM: Training-Free Visual Prompt Learning for Multimodal Large Language Models},
- url = {https://proceedings.neurips.cc/paper_files/paper/2024/file/4fd96b997454b5b02698595df70fccaf-Paper-Conference.pdf},
- volume = {37},
- year = {2024}
+@article{wu2024controlmllm,
+  title={Controlmllm: Training-free visual prompt learning for multimodal large language models},
+  author={Wu, Mingrui and Cai, Xinyue and Ji, Jiayi and Li, Jiale and Huang, Oucheng and Luo, Gen and Fei, Hao and Jiang, Guannan and Sun, Xiaoshuai and Ji, Rongrong},
+  journal={Advances in Neural Information Processing Systems},
+  volume={37},
+  pages={45206--45234},
+  year={2024}
 }
 ```
 ## Features
