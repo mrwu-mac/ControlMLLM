@@ -65,18 +65,176 @@ Tips: Due to the image cropping during preprocessing in LLaVA1.5, referring to r
 ## Results
 The results of combining with different MLLMs on ROC and RTC tasks.
 
-| MODELS                     | ROC    | RTC    |
-|----------------------------|--------|--------|
-| LLAVA-1.5                  | 54.72  | 57.42  |
-| LLAVA-1.5 + CONTROLMLLM    | 60.59  | 63.06  |
-| LLAVA-1.5 + CONTROLMLLM++  | 71.19  | 74.66  |
-| LLAVA-HR                   | 53.81  | 57.00  |
-| LLAVA-HR + CONTROLMLLM     | 58.92  | 66.89  |
-| LLAVA-HR + CONTROLMLLM++   | 69.06  | 82.68  |
-| QWEN2.5-VL                 | 78.81  | 81.91  |
-| QWEN2.5-VL + CONTROLMLLM   | 79.20  | 86.43  |
-| QWEN2.5-VL + CONTROLMLLM++ | 79.20  | 88.23  |
+<table>
+  <tr>
+    <th>MODELS</th>
+    <th>ROC</th>
+    <th>RTC</th>
+  </tr>
+  <tr>
+    <td>LLAVA-1.5</td>
+    <td>54.72</td>
+    <td>57.42</td>
+  </tr>
+  <tr>
+    <td>LLAVA-1.5 + CONTROLMLLM</td>
+    <td>60.59</td>
+    <td>63.06</td>
+  </tr>
+  <tr>
+    <td>LLAVA-1.5 + CONTROLMLLM++</td>
+    <td><strong>71.19</strong></td>
+    <td><strong>74.66</strong></td>
+  </tr>
+  <tr>
+    <td>LLAVA-HR</td>
+    <td>53.81</td>
+    <td>57.00</td>
+  </tr>
+  <tr>
+    <td>LLAVA-HR + CONTROLMLLM</td>
+    <td>58.92</td>
+    <td>66.89</td>
+  </tr>
+  <tr>
+    <td>LLAVA-HR + CONTROLMLLM++</td>
+    <td><strong>69.06</strong></td>
+    <td><strong>82.68</strong></td>
+  </tr>
+  <tr>
+    <td>QWEN2.5-VL</td>
+    <td>78.81</td>
+    <td>81.91</td>
+  </tr>
+  <tr>
+    <td>QWEN2.5-VL + CONTROLMLLM</td>
+    <td>79.20</td>
+    <td>86.43</td>
+  </tr>
+  <tr>
+    <td>QWEN2.5-VL + CONTROLMLLM++</td>
+    <td>79.20</td>
+    <td><strong>88.23</strong></td>
+  </tr>
+</table>
+Referring description performance on REFCOCOG and screenshot datasets. Metrics include BLEU-4 (B@4), METEOR (M), CIDEr (C), and SPICE (S). Our method not only equips non-referring models with effective grounding ability but also complements modern referring-capable MLLMs by enhancing their generalization and precision.
 
+<table border="1" style="border-collapse: collapse;">
+  <tr>
+    <td rowspan="2">MODEL</td>
+    <td colspan="4">REF-COCOG (IN-DOMAIN)</td>
+    <td colspan="4">SCREENSHOT (OUT-OF-DOMAIN)</td>
+  </tr>
+  <tr>
+    <td>B@4</td>
+    <td>M</td>
+    <td>C</td>
+    <td>S</td>
+    <td>B@4</td>
+    <td>M</td>
+    <td>C</td>
+    <td>S</td>
+  </tr>
+  <tr>
+    <td>LLAVA-1.5</td>
+    <td>5.02</td>
+    <td>13.15</td>
+    <td>55.61</td>
+    <td>17.61</td>
+    <td>0.32</td>
+    <td>3.96</td>
+    <td>9.80</td>
+    <td>3.58</td>
+  </tr>
+  <tr>
+    <td>LLAVA-1.5 + CONTROLMLLM</td>
+    <td><strong>5.53</strong></td>
+    <td><strong>14.00</strong></td>
+    <td><strong>59.75</strong></td>
+    <td><strong>19.08</strong></td>
+    <td><strong>0.45</strong></td>
+    <td><strong>5.08</strong></td>
+    <td><strong>19.74</strong></td>
+    <td><strong>5.81</strong></td>
+  </tr>
+  <tr>
+    <td>LLAVA-1.5 + CONTROLMLLM++</td>
+    <td>6.24</td>
+    <td>15.05</td>
+    <td>67.37</td>
+    <td>21.46</td>
+    <td>0.57</td>
+    <td>6.53</td>
+    <td>40.01</td>
+    <td>9.14</td>
+  </tr>
+  <tr>
+    <td>LLAVA-HR</td>
+    <td>5.28</td>
+    <td>13.45</td>
+    <td>56.29</td>
+    <td>18.55</td>
+    <td>0.29</td>
+    <td>4.27</td>
+    <td>10.88</td>
+    <td>4.59</td>
+  </tr>
+  <tr>
+    <td>LLAVA-HR + CONTROLMLLM</td>
+    <td>6.32</td>
+    <td>15.00</td>
+    <td>68.82</td>
+    <td>21.55</td>
+    <td>0.64</td>
+    <td>6.79</td>
+    <td>37.10</td>
+    <td>8.54</td>
+  </tr>
+  <tr>
+    <td>LLAVA-HR + CONTROLMLLM++</td>
+    <td><strong>7.50</strong></td>
+    <td><strong>16.11</strong></td>
+    <td><strong>78.42</strong></td>
+    <td><strong>24.02</strong></td>
+    <td><strong>0.98</strong></td>
+    <td><strong>9.18</strong></td>
+    <td><strong>66.96</strong></td>
+    <td><strong>13.83</strong></td>
+  </tr>
+  <tr>
+    <td>QWEN2.5-VL</td>
+    <td>5.22</td>
+    <td>16.86</td>
+    <td>56.78</td>
+    <td>20.18</td>
+    <td>1.09</td>
+    <td>4.56</td>
+    <td>34.32</td>
+    <td>7.15</td>
+  </tr>
+  <tr>
+    <td>QWEN2.5-VL + CONTROLMLLM</td>
+    <td>5.33</td>
+    <td><strong>16.91</strong></td>
+    <td>58.20</td>
+    <td>20.12</td>
+    <td>4.26</td>
+    <td>9.91</td>
+    <td>86.35</td>
+    <td>15.27</td>
+  </tr>
+  <tr>
+    <td>QWEN2.5-VL + CONTROLMLLM++</td>
+    <td><strong>5.45</strong></td>
+    <td>16.53</td>
+    <td><strong>59.50</strong></td>
+    <td>19.95</td>
+    <td><strong>9.05</strong></td>
+    <td><strong>16.04</strong></td>
+    <td><strong>141.36</strong></td>
+    <td><strong>25.08</strong></td>
+  </tr>
+</table>
 ## Acknowledgement
 
 [Layout-Guidance](https://github.com/silent-chen/layout-guidance), [ml-ferret](https://github.com/apple/ml-ferret), [Transformers](https://github.com/huggingface/transformers), [SeeClick](https://github.com/njucckevin/SeeClick) and [Visualizer](https://github.com/luo3300612/Visualizer).
