@@ -148,25 +148,25 @@ Referring description performance on REFCOCOG and screenshot datasets. Metrics i
   </tr>
   <tr>
     <td>LLAVA-1.5 + CONTROLMLLM</td>
-    <td><strong>5.53</strong></td>
-    <td><strong>14.00</strong></td>
-    <td><strong>59.75</strong></td>
-    <td><strong>19.08</strong></td>
-    <td><strong>0.45</strong></td>
-    <td><strong>5.08</strong></td>
-    <td><strong>19.74</strong></td>
-    <td><strong>5.81</strong></td>
+    <td>5.53</td>
+    <td>14.00</td>
+    <td>59.75</td>
+    <td>19.08</td>
+    <td>0.45</td>
+    <td>5.08</td>
+    <td>19.74</td>
+    <td>5.81</td>
   </tr>
   <tr>
     <td>LLAVA-1.5 + CONTROLMLLM++</td>
-    <td>6.24</td>
-    <td>15.05</td>
-    <td>67.37</td>
-    <td>21.46</td>
-    <td>0.57</td>
-    <td>6.53</td>
-    <td>40.01</td>
-    <td>9.14</td>
+    <td><strong>6.24</strong></td>
+    <td><strong>15.05</strong></td>
+    <td><strong>67.37</strong></td>
+    <td><strong>21.46</strong></td>
+    <td><strong>0.57</strong></td>
+    <td><strong>6.53</strong></td>
+    <td><strong>40.01</strong></td>
+    <td><strong>9.14</strong></td>
   </tr>
   <tr>
     <td>LLAVA-HR</td>
