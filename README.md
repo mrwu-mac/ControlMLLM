@@ -121,9 +121,9 @@ Referring description performance on REFCOCOG and screenshot datasets. Metrics i
 
 <table>
   <tr>
-    <td rowspan="2">MODEL</td>
-    <td colspan="4">REF-COCOG (IN-DOMAIN)</td>
-    <td colspan="4">SCREENSHOT (OUT-OF-DOMAIN)</td>
+    <td rowspan="2"><strong>MODELS</strong></td>
+    <td colspan="4"><strong>REF-COCOG (IN-DOMAIN)</strong></td>
+    <td colspan="4"><strong>SCREENSHOT (OUT-OF-DOMAIN)</strong></td>
   </tr>
   <tr>
     <td>B@4</td>
