@@ -119,7 +119,7 @@ The results of combining with different MLLMs on ROC and RTC tasks.
 </table>
 Referring description performance on REFCOCOG and screenshot datasets. Metrics include BLEU-4 (B@4), METEOR (M), CIDEr (C), and SPICE (S). Our method not only equips non-referring models with effective grounding ability but also complements modern referring-capable MLLMs by enhancing their generalization and precision.
 
-<table border="1" style="border-collapse: collapse;">
+<table>
   <tr>
     <td rowspan="2">MODEL</td>
     <td colspan="4">REF-COCOG (IN-DOMAIN)</td>
@@ -235,6 +235,7 @@ Referring description performance on REFCOCOG and screenshot datasets. Metrics i
     <td><strong>25.08</strong></td>
   </tr>
 </table>
+
 ## Acknowledgement
 
 [Layout-Guidance](https://github.com/silent-chen/layout-guidance), [ml-ferret](https://github.com/apple/ml-ferret), [Transformers](https://github.com/huggingface/transformers), [SeeClick](https://github.com/njucckevin/SeeClick) and [Visualizer](https://github.com/luo3300612/Visualizer).
